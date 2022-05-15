@@ -9,10 +9,10 @@ import java.util.HashMap;
 public class InMemoryTaskManager implements TaskManager {
     private static int id = 0;
 
-    private static HashMap<Integer, Task> taskMap = new HashMap<>();
-    private static HashMap<Integer, Epic> epicMap = new HashMap<>();
-    private static HashMap<Integer, SubTask> subTaskMap = new HashMap<>();
-    private HistoryManager historyManager;
+    private static final HashMap<Integer, Task> taskMap = new HashMap<>();
+    private static final HashMap<Integer, Epic> epicMap = new HashMap<>();
+    private static final HashMap<Integer, SubTask> subTaskMap = new HashMap<>();
+    private final HistoryManager historyManager;
 
     InMemoryTaskManager() {
         historyManager = Managers.getDefaultHistory();
