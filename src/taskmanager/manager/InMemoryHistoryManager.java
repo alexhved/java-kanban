@@ -9,10 +9,10 @@ import java.util.List;
 public class InMemoryHistoryManager implements HistoryManager {
 
     private static final int MAX_HISTORY_SIZE = 10;
-    List<Task> history;
+    private final List<Task> history;
 
     InMemoryHistoryManager() {
-        this.history = new LinkedList<>();
+        history = new LinkedList<>();
     }
 
     @Override

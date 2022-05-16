@@ -7,20 +7,21 @@ import taskmanager.task.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface TaskManager {
-    HashMap<Integer, Task> getTaskMap();
+    Map<Integer, Task> getTaskMap();
 
-    HashMap<Integer, Epic> getEpicMap();
+    Map<Integer, Epic> getEpicMap();
 
-    HashMap<Integer, SubTask> getSubTaskMap();
+    Map<Integer, SubTask> getSubTaskMap();
 
 
-    ArrayList<Task> getAllTasks();
+    List<Task> getAllTasks();
 
-    ArrayList<Epic> getAllEpics();
+    List<Epic> getAllEpics();
 
-    ArrayList<SubTask> getAllSubTasks();
+    List<SubTask> getAllSubTasks();
 
     void removeAllTasks();
 
@@ -56,7 +57,7 @@ public interface TaskManager {
 
     void removeSubTaskById(int id);
 
-    ArrayList<SubTask> getEpicsSubtasks(int id);
+    List<SubTask> getEpicsSubtasks(int id);
 
     HistoryManager getHistoryManager();
 

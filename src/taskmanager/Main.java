@@ -51,7 +51,8 @@ public class Main {
 
         System.out.println("history------");
         inMemoryTaskManager.getTaskById(1);
-        inMemoryTaskManager.getTaskById(1);
+        inMemoryTaskManager.getTaskById(2);
+        inMemoryTaskManager.getEpicById(3);
 
 
         for (Task task2 : inMemoryTaskManager.getHistoryManager().getHistory()) {

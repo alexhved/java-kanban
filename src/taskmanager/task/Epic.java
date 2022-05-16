@@ -1,14 +1,19 @@
 package taskmanager.task;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Epic extends Task {
-    public ArrayList<Integer> subTasksId;
+    private final List<Integer> subTasksId;
 
     public Epic(String name, String description) {
         super(name, description);
         subTasksId = new ArrayList<>();
+    }
+
+    public List<Integer> getSubTasksId() {
+        return subTasksId;
     }
 
     @Override
