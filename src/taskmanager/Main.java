@@ -9,70 +9,86 @@ public class Main {
         Task task = new Task("1-5", "12345");
         Task task1 = new Task("5-10", "5678910");
 
-        TaskManager inMemoryTaskManager = Managers.getDefault();
-
+        TaskManager taskManager = Managers.getDefault();
 
         System.out.println("create task");
-        inMemoryTaskManager.createTask(task);
-        inMemoryTaskManager.createTask(task1);
-        System.out.println(inMemoryTaskManager.getTaskMap());
+        taskManager.createTask(task);
+        taskManager.createTask(task1);
+        System.out.println(taskManager.getTaskMap());
 
         System.out.println("update task");
         task.setStatus(Status.DONE);
-        inMemoryTaskManager.updateTask(task);
-        System.out.println(inMemoryTaskManager.getTaskMap());
+        taskManager.updateTask(task);
+        System.out.println(taskManager.getTaskMap());
 
         System.out.println("create epic");
+        Epic epic1 = new Epic("drive", "moto");
         Epic epic = new Epic("learning", "Java course");
-        inMemoryTaskManager.createEpic(epic);
-        System.out.println(inMemoryTaskManager.getEpicMap());
+        taskManager.createEpic(epic);
+        taskManager.createEpic(epic1);
+        System.out.println(taskManager.getEpicMap());
 
         System.out.println("update epic");
         epic.setName("обучение");
         epic.setDescription("Джава курс");
-        inMemoryTaskManager.updateEpic(epic);
-        System.out.println(inMemoryTaskManager.getEpicMap());
+        taskManager.updateEpic(epic);
+        System.out.println(taskManager.getEpicMap());
 
         System.out.println("create subtask");
         SubTask subTask = new SubTask("sprint 3", "OOP", epic.getId());
-        inMemoryTaskManager.createSubTask(subTask);
+        taskManager.createSubTask(subTask);
         SubTask subTask1 = new SubTask("sprint 4", "final sprint", epic.getId());
-        inMemoryTaskManager.createSubTask(subTask1);
-        System.out.println(inMemoryTaskManager.getEpicMap());
-        System.out.println(inMemoryTaskManager.getSubTaskMap());
+        taskManager.createSubTask(subTask1);
+        System.out.println(taskManager.getEpicMap());
+        System.out.println(taskManager.getSubTaskMap());
 
         System.out.println("update subtask");
         subTask.setStatus(Status.NEW);
-        inMemoryTaskManager.updateSubTask(subTask);
+        taskManager.updateSubTask(subTask);
         subTask1.setStatus(Status.DONE);
-        inMemoryTaskManager.updateSubTask(subTask1);
-        System.out.println(inMemoryTaskManager.getEpicMap());
-        System.out.println(inMemoryTaskManager.getSubTaskMap());
+        taskManager.updateSubTask(subTask1);
+        System.out.println(taskManager.getEpicMap());
+        System.out.println(taskManager.getSubTaskMap());
 
         System.out.println("history------");
-        inMemoryTaskManager.getTaskById(1);
-        inMemoryTaskManager.getTaskById(2);
-        inMemoryTaskManager.getEpicById(3);
+        taskManager.getTaskById(1);
+        taskManager.getTaskById(2);
+        taskManager.getEpicById(3);
+        taskManager.getEpicById(4);
+        taskManager.getSubTaskById(5);
+        taskManager.getSubTaskById(6);
+        taskManager.getTaskById(1);
+        taskManager.getEpicById(3);
 
 
-        for (Task task2 : inMemoryTaskManager.getHistoryManager().getHistory()) {
+
+
+
+        for (Task task2 : taskManager.getHistoryManager().getHistoryList()) {
             System.out.println(task2);
         }
-        System.out.println(inMemoryTaskManager.getHistoryManager().getHistory().size());
+        System.out.println(taskManager.getHistoryManager().getHistoryList().size());
 
         System.out.println();
 
         System.out.println("remove");
-        inMemoryTaskManager.removeTaskById(1);
-        System.out.println(inMemoryTaskManager.getTaskMap());
-        inMemoryTaskManager.removeSubTaskById(5);
-        System.out.println(inMemoryTaskManager.getEpicMap());
-        System.out.println(inMemoryTaskManager.getSubTaskMap());
-        inMemoryTaskManager.removeEpicById(3);
-        System.out.println(inMemoryTaskManager.getEpicMap());
-        System.out.println(inMemoryTaskManager.getSubTaskMap());
-        inMemoryTaskManager.removeAllTasks();
-        System.out.println(inMemoryTaskManager.getTaskMap());
+        taskManager.removeTaskById(1);
+        taskManager.removeTaskById(2);
+        /*System.out.println(taskManager.getTaskMap());*/
+        taskManager.removeSubTaskById(5);
+        /*System.out.println(taskManager.getEpicMap());
+        System.out.println(taskManager.getSubTaskMap());*/
+        taskManager.removeEpicById(3);
+        taskManager.removeEpicById(4);
+        /*System.out.println(taskManager.getEpicMap());
+        System.out.println(taskManager.getSubTaskMap());*/
 
+        System.out.println("history-------");
+
+
+
+        for (Task element : taskManager.getHistoryManager().getHistoryList()) {
+            System.out.println(element);
+        }
     }
 }
