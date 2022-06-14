@@ -2,7 +2,10 @@ package taskmanager.manager;
 
 import taskmanager.task.Task;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class InMemoryHistoryManager implements HistoryManager {
@@ -15,6 +18,27 @@ public class InMemoryHistoryManager implements HistoryManager {
         head = null;
         tail = null;
         historyMap = new HashMap<>();
+    }
+
+
+    @Override
+    public void add(Task task) {
+        int taskId = task.getId();
+        if (historyMap.containsKey(taskId)) {
+            removeNode(historyMap.get(taskId));
+        }
+        historyMap.put(taskId, linkLast(task));
+    }
+
+    @Override
+    public void remove(int id) {
+        removeNode(historyMap.get(id));
+        historyMap.remove(id);
+    }
+
+    @Override
+    public List<Task> getHistoryList() {
+        return getTasks();
     }
 
     private Node<Task> linkLast(Task element) {
@@ -31,7 +55,7 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private List<Task> getTasks() {
         List<Task> taskList = new ArrayList<>();
-        if (head!=null) {
+        if (head != null) {
             Node<Task> node = head;
             while (true) {
                 taskList.add(node.data);
@@ -53,35 +77,13 @@ public class InMemoryHistoryManager implements HistoryManager {
             head = next;
         } else {
             prev.next = next;
-            node.prev = null;
         }
 
         if (next == null) {
             tail = prev;
         } else {
             next.prev = prev;
-            node.next = null;
         }
         node.data = null;
-    }
-
-    @Override
-    public void add(Task task) {
-        int taskId = task.getId();
-        if (historyMap.containsKey(taskId)) {
-            removeNode(historyMap.get(taskId));
-        }
-        historyMap.put(taskId, linkLast(task));
-    }
-
-    @Override
-    public void remove(int id) {
-        removeNode(historyMap.get(id));
-        historyMap.remove(id);
-    }
-
-    @Override
-    public List<Task> getHistoryList() {
-        return getTasks();
     }
 }
