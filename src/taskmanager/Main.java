@@ -3,92 +3,113 @@ package taskmanager;
 import taskmanager.task.*;
 import taskmanager.manager.*;
 
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class Main {
 
     public static void main(String[] args) {
+        FileBackedTasksManager backedManager = Managers.getBacked();
+
         Task task = new Task("1-5", "12345");
         Task task1 = new Task("5-10", "5678910");
-
-        TaskManager taskManager = Managers.getDefault();
-
         System.out.println("create task");
-        taskManager.createTask(task);
-        taskManager.createTask(task1);
-        System.out.println(taskManager.getTaskMap());
+        backedManager.createTask(task);
+        backedManager.createTask(task1);
+        //System.out.println(taskManager.getTaskMap());
 
         System.out.println("update task");
         task.setStatus(Status.DONE);
-        taskManager.updateTask(task);
-        System.out.println(taskManager.getTaskMap());
+        backedManager.updateTask(task);
+        //System.out.println(taskManager.getTaskMap());
 
         System.out.println("create epic");
         Epic epic1 = new Epic("drive", "moto");
         Epic epic = new Epic("learning", "Java course");
-        taskManager.createEpic(epic);
-        taskManager.createEpic(epic1);
-        System.out.println(taskManager.getEpicMap());
+        backedManager.createEpic(epic);
+        backedManager.createEpic(epic1);
+        //System.out.println(taskManager.getEpicMap());
 
         System.out.println("update epic");
         epic.setName("обучение");
         epic.setDescription("Джава курс");
-        taskManager.updateEpic(epic);
-        System.out.println(taskManager.getEpicMap());
+        backedManager.updateEpic(epic);
+        //System.out.println(taskManager.getEpicMap());
 
         System.out.println("create subtask");
         SubTask subTask = new SubTask("sprint 3", "OOP", epic.getId());
-        taskManager.createSubTask(subTask);
+        backedManager.createSubTask(subTask);
         SubTask subTask1 = new SubTask("sprint 4", "final sprint", epic.getId());
-        taskManager.createSubTask(subTask1);
-        System.out.println(taskManager.getEpicMap());
-        System.out.println(taskManager.getSubTaskMap());
+        backedManager.createSubTask(subTask1);
+        //System.out.println(taskManager.getEpicMap());
+        //System.out.println(taskManager.getSubTaskMap());
 
         System.out.println("update subtask");
         subTask.setStatus(Status.NEW);
-        taskManager.updateSubTask(subTask);
+        backedManager.updateSubTask(subTask);
         subTask1.setStatus(Status.DONE);
-        taskManager.updateSubTask(subTask1);
-        System.out.println(taskManager.getEpicMap());
-        System.out.println(taskManager.getSubTaskMap());
+        backedManager.updateSubTask(subTask1);
+        //System.out.println(taskManager.getEpicMap());
+        //System.out.println(taskManager.getSubTaskMap());
 
         System.out.println("history------");
-        taskManager.getTaskById(1);
-        taskManager.getTaskById(2);
-        taskManager.getEpicById(3);
-        taskManager.getEpicById(4);
-        taskManager.getSubTaskById(5);
-        taskManager.getSubTaskById(6);
-        taskManager.getTaskById(1);
-        taskManager.getEpicById(3);
+        backedManager.getTaskById(1);
+        backedManager.getTaskById(2);
+        backedManager.getEpicById(3);
+        backedManager.getEpicById(4);
+        backedManager.getSubTaskById(5);
+        backedManager.getSubTaskById(6);
+        backedManager.getTaskById(1);
+        backedManager.getEpicById(3);
+        System.out.println("-----maps-----");
+        System.out.println(backedManager.getTaskMap());
+        System.out.println(backedManager.getEpicMap());
+        System.out.println(backedManager.getSubTaskMap());
+        System.out.println("-----history------");
+        System.out.println(backedManager.getHistoryManager().getHistoryList());
+
+        backedManager = FileBackedTasksManager.loadFromFile(backedManager);
+
+        System.out.println("----upload----");
+        System.out.println("-----maps-----");
+        System.out.println(backedManager.getTaskMap());
+        System.out.println(backedManager.getEpicMap());
+        System.out.println(backedManager.getSubTaskMap());
+        System.out.println("history------");
+        System.out.println(backedManager.getHistoryManager().getHistoryList());
+
+//код ниже можно раскомментировать для теста
+
+        /*System.out.println("remove");
+        backedManager.removeTaskById(1);
+        backedManager.removeTaskById(2);
+        System.out.println(backedManager.getTaskMap());
+        backedManager.removeSubTaskById(5);
+        backedManager.removeSubTaskById(6);
+        System.out.println(backedManager.getEpicMap());
+        System.out.println(backedManager.getSubTaskMap());
+        backedManager.removeEpicById(3);
+        backedManager.removeEpicById(4);
+        System.out.println(backedManager.getEpicMap());
+        System.out.println(backedManager.getSubTaskMap());
 
 
+        System.out.println("-----maps-----");
+        System.out.println(backedManager.getTaskMap());
+        System.out.println(backedManager.getEpicMap());
+        System.out.println(backedManager.getSubTaskMap());
+        System.out.println("history------");
+        System.out.println(backedManager.getHistoryManager().getHistoryList());
 
+        backedManager = FileBackedTasksManager.loadFromFile(backedManager);
 
-
-        for (Task task2 : taskManager.getHistoryManager().getHistoryList()) {
-            System.out.println(task2);
-        }
-        System.out.println(taskManager.getHistoryManager().getHistoryList().size());
-
-        System.out.println();
-
-        System.out.println("remove");
-        taskManager.removeTaskById(1);
-        taskManager.removeTaskById(2);
-        /*System.out.println(taskManager.getTaskMap());*/
-        taskManager.removeSubTaskById(5);
-        /*System.out.println(taskManager.getEpicMap());
-        System.out.println(taskManager.getSubTaskMap());*/
-        taskManager.removeEpicById(3);
-        taskManager.removeEpicById(4);
-        /*System.out.println(taskManager.getEpicMap());
-        System.out.println(taskManager.getSubTaskMap());*/
-
-        System.out.println("history-------");
-
-
-
-        for (Task element : taskManager.getHistoryManager().getHistoryList()) {
-            System.out.println(element);
-        }
+        System.out.println("----upload----");
+        System.out.println("-----maps-----");
+        System.out.println(backedManager.getTaskMap());
+        System.out.println(backedManager.getEpicMap());
+        System.out.println(backedManager.getSubTaskMap());
+        System.out.println("history------");
+        System.out.println(backedManager.getHistoryManager().getHistoryList());*/
     }
 }

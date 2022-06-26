@@ -20,12 +20,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "taskmanager.tasks.Task{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
-                ", id='" + id +
-                '}';
+        return String.format("%s,%s,%s,%s,%s", id, Type.TASK, name, status, description);
     }
 
     @Override
@@ -41,8 +36,10 @@ public class Task {
         return Objects.hash(name, description, status, id);
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(Integer id) {
+        if (id!=null) {
+            this.id = id;
+        }
     }
 
     public void setStatus(Status status) {

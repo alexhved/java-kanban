@@ -18,13 +18,7 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return "taskmanager.tasks.Epic{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status='" + status + '\'' +
-                ", id='" + id +
-                ", subTasksId.size()= " + subTasksId.size() +
-                '}';
+        return String.format("%s,%s,%s,%s,%s", id, Type.EPIC, name, status, description);
     }
 
     @Override

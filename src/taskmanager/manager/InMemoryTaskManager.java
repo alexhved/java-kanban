@@ -2,22 +2,24 @@ package taskmanager.manager;
 
 import taskmanager.task.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class InMemoryTaskManager implements TaskManager {
     private static int id = 0;
 
-    private static final Map<Integer, Task> taskMap = new HashMap<>();
-    private static final Map<Integer, Epic> epicMap = new HashMap<>();
-    private static final Map<Integer, SubTask> subTaskMap = new HashMap<>();
-    private final HistoryManager historyManager;
+    protected static final Map<Integer, Task> taskMap = new HashMap<>();
+    protected static final Map<Integer, Epic> epicMap = new HashMap<>();
+    public static final Map<Integer, SubTask> subTaskMap = new HashMap<>();
+    protected HistoryManager historyManager;
 
     InMemoryTaskManager() {
         historyManager = Managers.getDefaultHistory();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 
     @Override
@@ -43,17 +45,17 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public List<Task> getAllTasks() {
-        return (ArrayList<Task>) taskMap.values();
+        return new ArrayList<>(taskMap.values());
     }
 
     @Override
     public List<Epic> getAllEpics() {
-        return (ArrayList<Epic>) epicMap.values();
+        return new ArrayList<>(epicMap.values());
     }
 
     @Override
     public List<SubTask> getAllSubTasks() {
-        return (ArrayList<SubTask>) subTaskMap.values();
+        return new ArrayList<>(subTaskMap.values());
     }
 
     @Override
