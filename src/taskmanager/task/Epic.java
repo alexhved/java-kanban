@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class Epic extends Task {
-    private final List<Integer> subTasksId;
+    private final List<Integer> subTasksId = new ArrayList<>();
+    public Epic() {super();}
 
     public Epic(String name, String description) {
         super(name, description);
-        subTasksId = new ArrayList<>();
     }
 
     public List<Integer> getSubTasksId() {

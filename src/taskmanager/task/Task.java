@@ -7,6 +7,7 @@ public class Task {
     protected String name;
     protected String description;
     protected int id;
+    public Task() {}
 
     public Task(String name, String description) {
         this.name = name;
