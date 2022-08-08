@@ -1,8 +1,13 @@
 package taskmanager.task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class SubTask extends Task {
+    /*private LocalDateTime startTime;
+
+    private Duration duration;*/
     private int epicId;
     public SubTask() {super();}
 
@@ -27,7 +32,7 @@ public class SubTask extends Task {
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s,%s,%s", id, Type.SUBTASK, name, status, description, epicId);
+        return String.format("%s,%s,%s,%s,%s,%s,%s,%s", id, Type.SUBTASK, name, status, description, epicId, startTime, duration);
     }
 
     public int getEpicId() {

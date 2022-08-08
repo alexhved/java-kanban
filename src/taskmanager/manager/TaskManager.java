@@ -5,11 +5,12 @@ import taskmanager.task.SubTask;
 import taskmanager.task.Task;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public interface TaskManager {
+
     Map<Integer, Task> getTaskMap();
 
     Map<Integer, Epic> getEpicMap();

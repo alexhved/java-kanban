@@ -3,7 +3,11 @@ package taskmanager;
 import taskmanager.task.*;
 import taskmanager.manager.*;
 
+
+
 public class Main {
+
+
 
     public static void checkTaskOnEquals(TaskManager taskManager, FileBackedTasksManager backedManager) {
         boolean isEqual = true;
@@ -36,10 +40,15 @@ public class Main {
         System.out.println("create task");
         taskManager.createTask(task);
         taskManager.createTask(task1);
+        //System.out.println("task starttime "+task.getStartTime());
 
         System.out.println("update task");
+        task.setStatus(Status.IN_PROGRESS);
+        taskManager.updateTask(task);
+        System.out.println("task start "+task.getStartTime());
         task.setStatus(Status.DONE);
         taskManager.updateTask(task);
+        System.out.println("task endtime "+task.getEndTime());
 
         System.out.println("create epic");
         Epic epic1 = new Epic("drive", "moto");
@@ -55,14 +64,26 @@ public class Main {
         System.out.println("create subtask");
         SubTask subTask = new SubTask("sprint 3", "OOP", epic.getId());
         taskManager.createSubTask(subTask);
+        //System.out.println("subtask starttime "+subTask.getStartTime());
         SubTask subTask1 = new SubTask("sprint 4", "final sprint", epic.getId());
         taskManager.createSubTask(subTask1);
 
         System.out.println("update subtask");
-        subTask.setStatus(Status.NEW);
+        subTask.setStatus(Status.IN_PROGRESS);
         taskManager.updateSubTask(subTask);
+        System.out.println("subtask start time "+ subTask.getStartTime());
+        System.out.println("epic start time "+epic.getStartTime());
+        subTask.setStatus(Status.DONE);
+        taskManager.updateSubTask(subTask);
+        System.out.println("subtask end time "+ subTask.getEndTime());
+        subTask1.setStatus(Status.IN_PROGRESS);
+        taskManager.updateSubTask(subTask1);
+        System.out.println("subtask1 start time "+ subTask1.getStartTime());
         subTask1.setStatus(Status.DONE);
         taskManager.updateSubTask(subTask1);
+        System.out.println("subtask1 end time "+subTask1.getEndTime());
+        System.out.println("epic end time "+epic.getEndTime());
+
 
 
         FileBackedTasksManager backedManager = Managers.getBacked();
@@ -131,7 +152,7 @@ public class Main {
         checkTaskOnEquals(taskManager, backedManager2);
         System.out.println("----------------");
 
-        System.out.println("remove");
+/*        System.out.println("remove");
         backedManager2.removeTaskById(1);
         backedManager2.removeTaskById(2);
         System.out.println(backedManager2.getTaskMap());
@@ -150,7 +171,7 @@ public class Main {
         System.out.println(backedManager2.getEpicMap());
         System.out.println(backedManager2.getSubTaskMap());
         System.out.println("history------");
-        System.out.println(backedManager2.getHistoryManager().getHistoryList());
+        System.out.println(backedManager2.getHistoryManager().getHistoryList());*/
 
 
     }

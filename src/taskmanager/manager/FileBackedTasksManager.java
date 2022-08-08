@@ -9,9 +9,13 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.SortedMap;
+import java.util.stream.Collectors;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private static final Path backedTasks = Paths.get("src/files/", "Backed_tasks.csv");
@@ -208,7 +212,16 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 task.setName(line[2]);
                 task.setStatus(Status.valueOf(line[3]));
                 task.setDescription(line[4]);
-                task.setId(Integer.parseInt(line[0]));
+                if (line[5].equals("null")) {
+                    task.setStartTime(null);
+                } else {
+                    task.setStartTime(LocalDateTime.parse(line[5]));
+                }
+                if (line[6].equals("null")) {
+                    task.setDuration(null);
+                } else {
+                    task.setDuration(Duration.parse(line[6]));
+                }
                 return task;
             case "EPIC":
                 Epic epic = new Epic();
@@ -216,6 +229,16 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 epic.setName(line[2]);
                 epic.setStatus(Status.valueOf(line[3]));
                 epic.setDescription(line[4]);
+                if (line[5].equals("null")) {
+                    epic.setStartTime(null);
+                } else {
+                    epic.setStartTime(LocalDateTime.parse(line[5]));
+                }
+                if (line[6].equals("null")) {
+                    epic.setDuration(null);
+                } else {
+                    epic.setDuration(Duration.parse(line[6]));
+                }
                 return epic;
             case "SUBTASK":
                 SubTask subTask = new SubTask();
@@ -224,6 +247,16 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 subTask.setStatus(Status.valueOf(line[3]));
                 subTask.setDescription(line[4]);
                 subTask.setEpicId(Integer.parseInt(line[5]));
+                if (line[6].equals("null")) {
+                    subTask.setStartTime(null);
+                } else {
+                    subTask.setStartTime(LocalDateTime.parse(line[6]));
+                }
+                if (line[7].equals("null")) {
+                    subTask.setDuration(null);
+                } else {
+                    subTask.setDuration(Duration.parse(line[7]));
+                }
                 return subTask;
         }
         return null;
@@ -246,8 +279,6 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 if (s.isBlank()) {
                     break;
                 }
-
-
             }
         } catch (IOException e) {
             System.out.println("Ошибка " + e.getMessage());
