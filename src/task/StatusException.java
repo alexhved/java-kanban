@@ -1,4 +1,4 @@
-package taskmanager.task;
+package task;
 
 public class StatusException extends Exception {
     public StatusException(String s) {super(s);}

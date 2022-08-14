@@ -1,9 +1,9 @@
-package taskmanager.manager;
+package manager;
 
-import taskmanager.task.Epic;
-import taskmanager.task.Status;
-import taskmanager.task.SubTask;
-import taskmanager.task.Task;
+import task.Epic;
+import task.Status;
+import task.SubTask;
+import task.Task;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -12,10 +12,7 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.stream.Collectors;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
     private static final Path backedTasks = Paths.get("src/files/", "Backed_tasks.csv");

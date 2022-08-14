@@ -1,6 +1,6 @@
-package taskmanager.task;
+package task;
 
-import taskmanager.manager.InMemoryTaskManager;
+import manager.InMemoryTaskManager;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

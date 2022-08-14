@@ -1,6 +1,6 @@
-package taskmanager.manager;
+package manager;
 
-import taskmanager.task.Task;
+import task.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +19,10 @@ public class InMemoryHistoryManager implements HistoryManager {
         tail = null;
         historyMap = new HashMap<>();
     }
-
+    @Override
+    public Map<Integer, Node<Task>> getHistoryMap() {
+        return historyMap;
+    }
 
     @Override
     public void add(Task task) {
@@ -32,8 +35,10 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void remove(int id) {
-        removeNode(historyMap.get(id));
-        historyMap.remove(id);
+        if (historyMap.containsKey(id)) {
+            removeNode(historyMap.get(id));
+            historyMap.remove(id);
+        }
     }
 
     @Override
@@ -55,14 +60,16 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private List<Task> getTasks() {
         List<Task> taskList = new ArrayList<>();
-        if (head != null) {
-            Node<Task> node = head;
-            while (true) {
-                taskList.add(node.data);
-                if (node.next == null) {
-                    break;
+        if (!historyMap.isEmpty()) {
+            if (head != null) {
+                Node<Task> node = head;
+                while (true) {
+                    taskList.add(node.data);
+                    if (node.next == null) {
+                        break;
+                    }
+                    node = node.next;
                 }
-                node = node.next;
             }
         }
         return taskList;

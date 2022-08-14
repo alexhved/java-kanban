@@ -1,13 +1,12 @@
-package taskmanager.manager;
+package manager;
 
-import taskmanager.task.Epic;
-import taskmanager.task.SubTask;
-import taskmanager.task.Task;
+import task.Epic;
+import task.SubTask;
+import task.Task;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
+import java.util.Set;
 
 public interface TaskManager {
 
@@ -36,8 +35,6 @@ public interface TaskManager {
 
     SubTask getSubTaskById(int id);
 
-    void removeTaskById(int id);
-
     void createTask(Task task);
 
     void createEpic(Epic epic);
@@ -53,6 +50,7 @@ public interface TaskManager {
     void updateSubTask(SubTask subTask);
 
     void updateStatus(Epic epic);
+    void removeTaskById(int id);
 
     void removeEpicById(int id);
 
@@ -61,5 +59,6 @@ public interface TaskManager {
     List<SubTask> getEpicsSubtasks(int id);
 
     HistoryManager getHistoryManager();
+    Set<Task> getPrioritizedSet();
 
 }

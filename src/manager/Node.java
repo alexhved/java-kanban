@@ -1,4 +1,4 @@
-package taskmanager.manager;
+package manager;
 
 
 public class Node<T> {
