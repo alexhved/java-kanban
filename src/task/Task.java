@@ -1,26 +1,43 @@
 package task;
 
-import manager.InMemoryTaskManager;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import static manager.InMemoryTaskManager.subTaskMap;
+import static manager.InMemoryTaskManager.taskMap;
 
 public class Task {
     Status status;
     protected String name;
     protected String description;
     protected int id;
-
     protected LocalDateTime startTime;
-
     protected Duration duration;
-    public Task() {}
+
+    public Task() {
+    }
+
+    public Task(String name, String description, LocalDateTime startTime, Duration duration) {
+        this.name = name;
+        this.description = description;
+        this.startTime = startTime;
+        this.duration = duration;
+        this.status = Status.NEW;
+    }
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.status = Status.NEW;
+    }
+
+    private static boolean isTaskLock() {
+        List<Task> tmp = new ArrayList<>();
+        tmp.addAll(taskMap.values());
+        tmp.addAll(subTaskMap.values());
+        return tmp.stream().anyMatch(task -> task.getStatus() == Status.IN_PROGRESS);
     }
 
     public int getId() {
@@ -62,7 +79,7 @@ public class Task {
     }
 
     public void setId(Integer id) {
-        if (id!=null) {
+        if (id != null) {
             this.id = id;
         }
     }
@@ -72,7 +89,7 @@ public class Task {
             switch (status) {
                 case NEW, DONE -> this.status = status;
                 case IN_PROGRESS -> {
-                    if (!InMemoryTaskManager.getTaskLock()) {
+                    if (!isTaskLock()) {
                         this.status = status;
                     } else {
                         throw new StatusException("Завершите предыдущую задачу");

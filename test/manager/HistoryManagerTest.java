@@ -8,6 +8,9 @@ import task.Epic;
 import task.SubTask;
 import task.Task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 
 class HistoryManagerTest {
@@ -15,17 +18,23 @@ class HistoryManagerTest {
     HistoryManager historyManager;
 
     @BeforeEach
-    public void setUp () {
+    public void setUp() {
         taskmanager = Managers.getDefault();
         historyManager = taskmanager.getHistoryManager();
-        taskmanager.createTask(new Task("1-5", "12345"));
-        taskmanager.createTask(new Task("5-10", "5678910"));
+        taskmanager.createTask(new Task("1-5", "12345",
+                LocalDateTime.of(2023, Month.JUNE, 1, 0, 0), Duration.ofMinutes(10)));
+        taskmanager.createTask(new Task("5-10", "5678910",
+                LocalDateTime.of(2023, Month.JUNE, 2, 0, 0), Duration.ofMinutes(10)));
         taskmanager.createEpic(new Epic("drive", "moto"));
         taskmanager.createEpic(new Epic("learning", "Java course"));
-        taskmanager.createSubTask(new SubTask("sprint 3", "OOP", 3));
-        taskmanager.createSubTask(new SubTask("learning", "Java course", 3));
-        taskmanager.createSubTask(new SubTask("learninffsfsg", "Java coursedfd", 4));
-        taskmanager.createSubTask(new SubTask("sfgsgs", "Java dsff", 4));
+        taskmanager.createSubTask(new SubTask("sprint 3", "OOP", 3,
+                LocalDateTime.of(2023, Month.JUNE, 5, 0, 0), Duration.ofMinutes(10)));
+        taskmanager.createSubTask(new SubTask("learning", "Java course", 3,
+                LocalDateTime.of(2023, Month.JUNE, 6, 0, 0), Duration.ofMinutes(10)));
+        taskmanager.createSubTask(new SubTask("learninffsfsg", "Java coursedfd", 4,
+                LocalDateTime.of(2023, Month.JUNE, 7, 0, 0), Duration.ofMinutes(10)));
+        taskmanager.createSubTask(new SubTask("sfgsgs", "Java dsff", 4,
+                LocalDateTime.of(2023, Month.JUNE, 8, 0, 0), Duration.ofMinutes(10)));
         taskmanager.getTaskById(1);
         taskmanager.getTaskById(2);
         taskmanager.getEpicById(3);
@@ -33,6 +42,7 @@ class HistoryManagerTest {
         taskmanager.getSubTaskById(5);
         taskmanager.getSubTaskById(6);
     }
+
     @AfterEach
     public void clear() {
         taskmanager.removeAllTasks();
@@ -41,19 +51,21 @@ class HistoryManagerTest {
         historyManager.getHistoryMap().clear();
         InMemoryTaskManager.setId(0);
     }
+
     @Test
     void addWithEmptyHistory() {
         clear();
-        Task task = new Task("name", "description");
+        Task task = new Task("name", "description", LocalDateTime.now(), Duration.ofMinutes(10));
         taskmanager.createTask(task);
         taskmanager.getHistoryManager().add(task);
         Assertions.assertFalse(historyManager.getHistoryMap().isEmpty());
         Assertions.assertEquals(task, historyManager.getHistoryMap().get(task.getId()).data);
         Assertions.assertEquals(taskmanager.getTaskById(1), historyManager.getHistoryMap().get(1).data);
     }
+
     @Test
     void addTwice() {
-        Task task = new Task("name", "description");
+        Task task = new Task("name", "description", LocalDateTime.now(), Duration.ofMinutes(10));
         taskmanager.createTask(task);
         taskmanager.getHistoryManager().add(task);
         int size = historyManager.getHistoryMap().size();
@@ -64,36 +76,42 @@ class HistoryManagerTest {
         Assertions.assertEquals(task, historyManager.getHistoryMap().get(task.getId()).data);
         Assertions.assertEquals(taskmanager.getTaskById(1), historyManager.getHistoryMap().get(1).data);
     }
+
     @Test
     void removeWithEmptyHistory() {
         clear();
         historyManager.remove(1);
         Assertions.assertFalse(historyManager.getHistoryMap().containsKey(1));
     }
+
     @Test
     void removeTwice() {
         historyManager.remove(1);
         historyManager.remove(1);
         Assertions.assertFalse(historyManager.getHistoryMap().containsKey(1));
     }
+
     @Test
     void removeFirst() {
         historyManager.remove(1);
         Assertions.assertFalse(historyManager.getHistoryMap().containsKey(1));
         Assertions.assertFalse(historyManager.getHistoryMap().isEmpty());
     }
+
     @Test
     void removeMedium() {
         historyManager.remove(3);
         Assertions.assertFalse(historyManager.getHistoryMap().containsKey(3));
         Assertions.assertFalse(historyManager.getHistoryMap().isEmpty());
     }
+
     @Test
     void removeLast() {
         historyManager.remove(6);
         Assertions.assertFalse(historyManager.getHistoryMap().containsKey(6));
         Assertions.assertFalse(historyManager.getHistoryMap().isEmpty());
     }
+
     @Test
     void getHistoryListWithEmptyHistory() {
         clear();
@@ -101,6 +119,7 @@ class HistoryManagerTest {
         Assertions.assertNotNull(historyList);
         Assertions.assertTrue(historyList.isEmpty());
     }
+
     @Test
     void getHistoryList() {
         List<Task> historyList = historyManager.getHistoryList();

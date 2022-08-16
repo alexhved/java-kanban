@@ -8,20 +8,30 @@ import task.Epic;
 import task.SubTask;
 import task.Task;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.Month;
+
 
 public class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager> {
 
     @BeforeEach
-    public void setUp () {
+    public void setUp() {
         taskmanager = Managers.getBacked();
-        taskmanager.createTask(new Task("1-5", "12345"));
-        taskmanager.createTask(new Task("5-10", "5678910"));
+        taskmanager.createTask(new Task("1-5", "12345",
+                LocalDateTime.of(2023, Month.JUNE, 1, 0, 0), Duration.ofMinutes(10)));
+        taskmanager.createTask(new Task("5-10", "5678910",
+                LocalDateTime.of(2023, Month.JUNE, 2, 0, 0), Duration.ofMinutes(10)));
         taskmanager.createEpic(new Epic("drive", "moto"));
         taskmanager.createEpic(new Epic("learning", "Java course"));
-        taskmanager.createSubTask(new SubTask("sprint 3", "OOP", 3));
-        taskmanager.createSubTask(new SubTask("learning", "Java course", 3));
-        taskmanager.createSubTask(new SubTask("learninffsfsg", "Java coursedfd", 4));
-        taskmanager.createSubTask(new SubTask("sfgsgs", "Java dsff", 4));
+        taskmanager.createSubTask(new SubTask("sprint 3", "OOP", 3,
+                LocalDateTime.of(2023, Month.JUNE, 5, 0, 0), Duration.ofMinutes(10)));
+        taskmanager.createSubTask(new SubTask("learning", "Java course", 3,
+                LocalDateTime.of(2023, Month.JUNE, 6, 0, 0), Duration.ofMinutes(10)));
+        taskmanager.createSubTask(new SubTask("learninffsfsg", "Java coursedfd", 4,
+                LocalDateTime.of(2023, Month.JUNE, 7, 0, 0), Duration.ofMinutes(10)));
+        taskmanager.createSubTask(new SubTask("sfgsgs", "Java dsff", 4,
+                LocalDateTime.of(2023, Month.JUNE, 8, 0, 0), Duration.ofMinutes(10)));
         taskmanager.getTaskById(1);
         taskmanager.getTaskById(2);
         taskmanager.getEpicById(3);
@@ -29,6 +39,7 @@ public class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksM
         taskmanager.getSubTaskById(5);
         taskmanager.getSubTaskById(6);
     }
+
     @AfterEach
     public void clear() {
         taskmanager.removeAllTasks();
@@ -51,6 +62,7 @@ public class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksM
         Assertions.assertTrue(tasksManager2.getEpicMap().isEmpty());
         Assertions.assertTrue(tasksManager2.getSubTaskMap().isEmpty());
     }
+
     @Test
     public void loadFromFile() {
         FileBackedTasksManager tasksManager2 = FileBackedTasksManager.loadFromFile(taskmanager);
@@ -61,6 +73,7 @@ public class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksM
         Assertions.assertEquals(taskmanager.getTaskMap(), tasksManager2.getTaskMap());
         Assertions.assertEquals(taskmanager.getSubTaskMap(), tasksManager2.getSubTaskMap());
     }
+
     @Test
     public void loadFromFileEpicWithutSubtasks() {
         taskmanager.removeSubTaskById(5);

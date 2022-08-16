@@ -1,5 +1,7 @@
 package task;
 
 public class StatusException extends Exception {
-    public StatusException(String s) {super(s);}
+    public StatusException(String s) {
+        super(s);
+    }
 }

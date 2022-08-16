@@ -9,7 +9,10 @@ import java.util.Objects;
 public class Epic extends Task {
     private final List<Integer> subTasksId = new ArrayList<>();
     private LocalDateTime endTime;
-    public Epic() {super();}
+
+    public Epic() {
+        super();
+    }
 
     public Epic(String name, String description) {
         super(name, description);

@@ -50,6 +50,7 @@ public interface TaskManager {
     void updateSubTask(SubTask subTask);
 
     void updateStatus(Epic epic);
+
     void removeTaskById(int id);
 
     void removeEpicById(int id);
@@ -59,6 +60,7 @@ public interface TaskManager {
     List<SubTask> getEpicsSubtasks(int id);
 
     HistoryManager getHistoryManager();
+
     Set<Task> getPrioritizedSet();
 
 }

@@ -19,6 +19,7 @@ public class InMemoryHistoryManager implements HistoryManager {
         tail = null;
         historyMap = new HashMap<>();
     }
+
     @Override
     public Map<Integer, Node<Task>> getHistoryMap() {
         return historyMap;
