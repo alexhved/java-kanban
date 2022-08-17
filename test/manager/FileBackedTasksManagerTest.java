@@ -45,6 +45,7 @@ public class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksM
         taskmanager.removeAllTasks();
         taskmanager.removeAllEpics();
         taskmanager.removeAllSubTasks();
+        taskmanager.getPrioritizedSet().clear();
         InMemoryTaskManager.setId(0);
         taskmanager.historyManager.remove(1);
         taskmanager.historyManager.remove(2);

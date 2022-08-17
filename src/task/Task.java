@@ -16,6 +16,7 @@ public class Task {
     protected int id;
     protected LocalDateTime startTime;
     protected Duration duration;
+    protected Type type;
 
     public Task() {
     }
@@ -26,6 +27,7 @@ public class Task {
         this.startTime = startTime;
         this.duration = duration;
         this.status = Status.NEW;
+        this.type = Type.TASK;
     }
 
     public Task(String name, String description) {
@@ -38,6 +40,10 @@ public class Task {
         tmp.addAll(taskMap.values());
         tmp.addAll(subTaskMap.values());
         return tmp.stream().anyMatch(task -> task.getStatus() == Status.IN_PROGRESS);
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public int getId() {

@@ -16,6 +16,8 @@ public class Epic extends Task {
 
     public Epic(String name, String description) {
         super(name, description);
+        this.type = Type.EPIC;
+
     }
 
     public List<Integer> getSubTasksId() {

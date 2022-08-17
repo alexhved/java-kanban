@@ -119,6 +119,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
         clear();
         taskmanager.removeAllTasks();
         assertEquals(0, taskmanager.getTaskMap().size());
+        assertTrue(taskmanager.getPrioritizedSet().isEmpty());
+
     }
 
     @Test
@@ -196,6 +198,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
         Task equalTask = taskmanager.getTaskById(id);
         assertNotNull(equalTask);
         assertEquals(task, equalTask);
+        assertTrue(taskmanager.getTaskMap().containsValue(task));
+        assertTrue(taskmanager.getPrioritizedSet().contains(task));
     }
 
     @Test
@@ -207,6 +211,9 @@ abstract class TaskManagerTest<T extends TaskManager> {
         Task equalTask = taskmanager.getTaskById(id);
         assertNotNull(equalTask);
         assertEquals(task, equalTask);
+        assertTrue(taskmanager.getPrioritizedSet().contains(task));
+        assertTrue(taskmanager.getTaskMap().containsValue(task));
+
     }
 
     @Test
@@ -217,6 +224,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         Epic equalEpic = taskmanager.getEpicById(id);
         assertNotNull(equalEpic);
         assertEquals(epic, equalEpic);
+        assertTrue(taskmanager.getEpicMap().containsValue(epic));
     }
 
     @Test
@@ -228,6 +236,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         Epic equalEpic = taskmanager.getEpicById(id);
         assertNotNull(equalEpic);
         assertEquals(epic, equalEpic);
+        assertTrue(taskmanager.getEpicMap().containsValue(epic));
     }
 
     @Test
@@ -238,6 +247,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
         SubTask equalSubtask = taskmanager.getSubTaskById(id);
         assertNotNull(equalSubtask);
         assertEquals(subTask, equalSubtask);
+        assertTrue(taskmanager.getSubTaskMap().containsValue(subTask));
+        assertTrue(taskmanager.getPrioritizedSet().contains(subTask));
     }
 
     @Test
@@ -248,6 +259,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
         int id = subTask.getId();
         SubTask equalSubtask = taskmanager.getSubTaskById(id);
         assertNull(equalSubtask);
+        assertFalse(taskmanager.getSubTaskMap().containsValue(subTask));
+        assertFalse(taskmanager.getPrioritizedSet().contains(subTask));
     }
 
     @Test
@@ -263,6 +276,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
         assertNotNull(equalTask);
         assertEquals("name2", task.getName());
         assertEquals("descr2", task.getDescription());
+        assertTrue(taskmanager.getTaskMap().containsValue(task));
+        assertTrue(taskmanager.getPrioritizedSet().contains(task));
         Status status = equalTask.getStatus();
         switch (status) {
             case NEW -> {
@@ -292,6 +307,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
         assertNotNull(equalTask);
         assertEquals("name2", task.getName());
         assertEquals("descr2", task.getDescription());
+        assertTrue(taskmanager.getTaskMap().containsValue(task));
+        assertTrue(taskmanager.getPrioritizedSet().contains(task));
         Status status = equalTask.getStatus();
         switch (status) {
             case NEW -> {
@@ -319,6 +336,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         assertNotNull(equalEpic);
         assertEquals("name2", equalEpic.getName());
         assertEquals("descr2", equalEpic.getDescription());
+        assertTrue(taskmanager.getEpicMap().containsValue(epic));
     }
 
     @Test
@@ -334,6 +352,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         assertNotNull(equalEpic);
         assertEquals("name2", equalEpic.getName());
         assertEquals("descr2", equalEpic.getDescription());
+        assertTrue(taskmanager.getEpicMap().containsValue(epic));
     }
 
     @Test
@@ -348,6 +367,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
         assertNotNull(equalSubtask);
         assertEquals("name2", equalSubtask.getName());
         assertEquals("descr2", equalSubtask.getDescription());
+        assertTrue(taskmanager.getSubTaskMap().containsValue(subTask));
+        assertTrue(taskmanager.getPrioritizedSet().contains(subTask));
     }
 
     @Test
@@ -361,6 +382,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         taskmanager.updateSubTask(subTask);
         SubTask equalSubtask = taskmanager.getSubTaskById(id);
         assertNull(equalSubtask);
+
     }
 
     @Test
@@ -368,6 +390,8 @@ abstract class TaskManagerTest<T extends TaskManager> {
         Task task = taskmanager.getTaskMap().get(1);
         taskmanager.removeTaskById(1);
         assertFalse(taskmanager.getTaskMap().containsValue(task));
+        assertFalse(taskmanager.getPrioritizedSet().contains(task));
+
     }
 
     @Test
@@ -376,37 +400,51 @@ abstract class TaskManagerTest<T extends TaskManager> {
         Task task = taskmanager.getTaskMap().get(1);
         taskmanager.removeTaskById(1);
         assertFalse(taskmanager.getTaskMap().containsValue(task));
+        assertFalse(taskmanager.getPrioritizedSet().contains(task));
+
     }
 
     @Test
     public void removeEpicById() {
+        Epic epic = taskmanager.getEpicById(3);
         taskmanager.removeEpicById(3);
         assertFalse(taskmanager.getEpicMap().containsKey(3));
         assertFalse(taskmanager.getSubTaskMap().containsKey(5));
         assertFalse(taskmanager.getSubTaskMap().containsKey(6));
+        assertFalse(taskmanager.getPrioritizedSet().contains(epic));
+
     }
 
     @Test
     public void removeEpicByIdWithEmpty() {
         clear();
+        Epic epic = taskmanager.getEpicById(3);
         taskmanager.removeEpicById(3);
         assertFalse(taskmanager.getEpicMap().containsKey(3));
         assertFalse(taskmanager.getSubTaskMap().containsKey(5));
         assertFalse(taskmanager.getSubTaskMap().containsKey(6));
+        assertFalse(taskmanager.getPrioritizedSet().contains(epic));
+
     }
 
     @Test
     public void removeSubtaskById() {
+        SubTask subTask = taskmanager.getSubTaskById(5);
         taskmanager.removeSubTaskById(5);
         assertFalse(taskmanager.getSubTaskMap().containsKey(5));
         assertFalse(taskmanager.getEpicById(3).getSubTasksId().contains(5));
+        assertFalse(taskmanager.getPrioritizedSet().contains(subTask));
+
     }
 
     @Test
     public void removeSubtaskByIdWithEmpty() {
         clear();
+        SubTask subTask = taskmanager.getSubTaskById(5);
         taskmanager.removeSubTaskById(5);
         assertFalse(taskmanager.getSubTaskMap().containsKey(5));
+        assertFalse(taskmanager.getPrioritizedSet().contains(subTask));
+
     }
 
     @Test
@@ -427,7 +465,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    public void getPriorityzedSet() {
+    public void getPrioritizedSet() {
         Task task = taskmanager.getTaskById(1);
         task.setStatus(Status.IN_PROGRESS);
         taskmanager.updateTask(task);
@@ -454,7 +492,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     }
 
     @Test
-    public void getPriorityzedSetWithEmpty() {
+    public void getPrioritizedSetWithEmpty() {
         clear();
         Set<Task> priorityzedSet = taskmanager.getPrioritizedSet();
         assertNotNull(priorityzedSet);

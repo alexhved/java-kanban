@@ -49,6 +49,7 @@ class HistoryManagerTest {
         taskmanager.removeAllEpics();
         taskmanager.removeAllSubTasks();
         historyManager.getHistoryMap().clear();
+        taskmanager.getPrioritizedSet().clear();
         InMemoryTaskManager.setId(0);
     }
 
