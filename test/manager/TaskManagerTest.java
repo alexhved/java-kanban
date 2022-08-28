@@ -2,10 +2,10 @@ package manager;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import task.Epic;
-import task.Status;
-import task.SubTask;
-import task.Task;
+import epic.Epic;
+import epic.Status;
+import epic.SubTask;
+import epic.Task;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -451,7 +451,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
     public void getEpicsSubtasks() {
         Epic epic = taskmanager.getEpicById(4);
         List<SubTask> subTaskList = taskmanager.getEpicsSubtasks(4);
-        List<Integer> subtasksIds = subTaskList.stream().map(subTask -> subTask.getId()).collect(Collectors.toList());
+        List<Integer> subtasksIds = subTaskList.stream().map(Task::getId).collect(Collectors.toList());
         assertEquals(subtasksIds, epic.getSubTasksId());
     }
 

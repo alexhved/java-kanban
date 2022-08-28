@@ -1,6 +1,6 @@
 package manager;
 
-import task.Task;
+import epic.Task;
 
 import java.util.ArrayList;
 import java.util.HashMap;

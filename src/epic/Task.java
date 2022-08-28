@@ -1,4 +1,4 @@
-package task;
+package epic;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ public class Task {
     protected int id;
     protected LocalDateTime startTime;
     protected Duration duration;
-    protected Type type;
+    protected TaskType taskType;
 
     public Task() {
     }
@@ -27,7 +27,7 @@ public class Task {
         this.startTime = startTime;
         this.duration = duration;
         this.status = Status.NEW;
-        this.type = Type.TASK;
+        this.taskType = TaskType.TASK;
     }
 
     public Task(String name, String description) {
@@ -42,8 +42,12 @@ public class Task {
         return tmp.stream().anyMatch(task -> task.getStatus() == Status.IN_PROGRESS);
     }
 
-    public Type getType() {
-        return type;
+    public TaskType getType() {
+        return taskType;
+    }
+
+    public void setType(TaskType taskType) {
+        this.taskType = taskType;
     }
 
     public int getId() {
@@ -52,7 +56,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s,%s,%s,%s", id, Type.TASK, name, status, description, startTime, duration);
+        return String.format("%s,%s,%s,%s,%s,%s,%s", id, TaskType.TASK, name, status, description, startTime, duration);
     }
 
     @Override

@@ -2,9 +2,9 @@ package manager;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import task.Epic;
-import task.SubTask;
-import task.Task;
+import epic.Epic;
+import epic.SubTask;
+import epic.Task;
 
 import java.time.Duration;
 import java.time.LocalDateTime;

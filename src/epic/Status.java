@@ -1,4 +1,4 @@
-package task;
+package epic;
 
 public enum Status {
     NEW,

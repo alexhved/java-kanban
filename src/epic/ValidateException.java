@@ -1,4 +1,4 @@
-package task;
+package epic;
 
 public class ValidateException extends Exception {
     public ValidateException(String s) {

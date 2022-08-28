@@ -1,9 +1,9 @@
 package manager;
 
-import task.Epic;
-import task.Status;
-import task.SubTask;
-import task.Task;
+import epic.Epic;
+import epic.Status;
+import epic.SubTask;
+import epic.Task;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -203,7 +203,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     private Task taskFromString(String value) {
         String[] line = value.split(",");
         switch (line[1]) {
-            case "TASK":
+            case "TASK" -> {
                 Task task = new Task();
                 task.setId(Integer.parseInt(line[0]));
                 task.setName(line[2]);
@@ -220,7 +220,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     task.setDuration(Duration.parse(line[6]));
                 }
                 return task;
-            case "EPIC":
+            }
+            case "EPIC" -> {
                 Epic epic = new Epic();
                 epic.setId(Integer.parseInt(line[0]));
                 epic.setName(line[2]);
@@ -237,7 +238,8 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     epic.setDuration(Duration.parse(line[6]));
                 }
                 return epic;
-            case "SUBTASK":
+            }
+            case "SUBTASK" -> {
                 SubTask subTask = new SubTask();
                 subTask.setId(Integer.parseInt(line[0]));
                 subTask.setName(line[2]);
@@ -255,6 +257,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                     subTask.setDuration(Duration.parse(line[7]));
                 }
                 return subTask;
+            }
         }
         return null;
     }

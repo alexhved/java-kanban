@@ -1,8 +1,9 @@
 package manager;
 
-import task.*;
+import epic.*;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -21,6 +22,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     public static void setId(int id) {
         InMemoryTaskManager.id = id;
+    }
+    public static int getId() {
+        return id;
     }
 
     @Override
@@ -76,19 +80,19 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void removeAllTasks() {
-        prioritizedSet.removeIf(task -> task.getType().equals(Type.TASK));
+        prioritizedSet.removeIf(task -> task.getType().equals(TaskType.TASK));
         taskMap.clear();
     }
 
     @Override
     public void removeAllEpics() {
-        prioritizedSet.removeIf(task -> task.getType().equals(Type.EPIC));
+        prioritizedSet.removeIf(task -> task.getType().equals(TaskType.EPIC));
         epicMap.clear();
     }
 
     @Override
     public void removeAllSubTasks() {
-        prioritizedSet.removeIf(task -> task.getType().equals(Type.SUBTASK));
+        prioritizedSet.removeIf(task -> task.getType().equals(TaskType.SUBTASK));
         subTaskMap.clear();
     }
 
@@ -288,9 +292,9 @@ public class InMemoryTaskManager implements TaskManager {
 
     private void updateEpicTime(Epic epic) {
         if (epic.getSubTasksId().isEmpty()) {
-            epic.setStartTime(null);
-            epic.setDuration(null);
-            epic.setEndTime(null);
+            epic.setStartTime(LocalDateTime.MAX);
+            epic.setDuration(Duration.ZERO);
+            epic.setEndTime(LocalDateTime.MIN);
             return;
         }
 

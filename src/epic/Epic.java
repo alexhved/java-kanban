@@ -1,4 +1,4 @@
-package task;
+package epic;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -16,7 +16,9 @@ public class Epic extends Task {
 
     public Epic(String name, String description) {
         super(name, description);
-        this.type = Type.EPIC;
+        this.taskType = TaskType.EPIC;
+        this.startTime =LocalDateTime.MAX;
+        this.duration = Duration.ZERO;
 
     }
 
@@ -26,8 +28,9 @@ public class Epic extends Task {
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s,%s,%s,%s", id, Type.EPIC, name, status, description, startTime, duration);
+        return String.format("%s,%s,%s,%s,%s,%s,%s", id, TaskType.EPIC, name, status, description, startTime, duration);
     }
+
 
     @Override
     public boolean equals(Object o) {

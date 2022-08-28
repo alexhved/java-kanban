@@ -1,6 +1,6 @@
 package manager;
 
-import task.Task;
+import epic.Task;
 
 import java.util.List;
 import java.util.Map;

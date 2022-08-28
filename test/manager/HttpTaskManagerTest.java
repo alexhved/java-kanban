@@ -1,5 +1,9 @@
+package manager;
 
-import manager.HttpTaskManager;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import server.KVServer;
 import epic.Epic;
 import epic.SubTask;
@@ -12,12 +16,14 @@ import java.time.Month;
 import java.util.Map;
 import java.util.Set;
 
-public class Main {
-
-    public static void main(String[] args) throws IOException {
-        KVServer kvServer = new KVServer();
+class HttpTaskManagerTest {
+    KVServer kvServer;
+    HttpTaskManager httpTaskManager;
+    @BeforeEach
+    public void setUp() throws IOException {
+        kvServer = new KVServer();
         kvServer.start();
-        HttpTaskManager httpTaskManager = new HttpTaskManager("http://localhost:");
+        httpTaskManager = new HttpTaskManager("http://localhost:");
 
         httpTaskManager.createTask(new Task("1-5", "12345",
                 LocalDateTime.of(2023, Month.JUNE, 1, 0, 0), Duration.ofMinutes(10)));
@@ -33,9 +39,22 @@ public class Main {
         httpTaskManager.getEpicById(3);
         httpTaskManager.getEpicById(4);
         httpTaskManager.getSubTaskById(5);
+    }
 
-        httpTaskManager.save();
+    @AfterEach
+    void tearDown() {
+        httpTaskManager.removeAllTasks();
+        httpTaskManager.removeAllEpics();
+        httpTaskManager.removeAllSubTasks();
+        httpTaskManager.getHistoryManager().getHistoryMap().clear();
+        httpTaskManager.getPrioritizedSet().clear();
+        InMemoryTaskManager.setId(0);
 
+        kvServer.stop();
+    }
+
+    @Test
+    void load() {
         Map<Integer, Task> taskMap = httpTaskManager.getTaskMap();
         Map<Integer, Epic> epicMap = httpTaskManager.getEpicMap();
         Map<Integer, SubTask> subTaskMap = httpTaskManager.getSubTaskMap();
@@ -51,18 +70,11 @@ public class Main {
         Map<Integer, SubTask> otherManagerSubTaskMap = otherManager.getSubTaskMap();
         Set<Task> otherManagerPrioritizedSet = otherManager.getPrioritizedSet();
 
-        System.out.println(taskMap);
-        System.out.println(otherManagerTaskMap);
-        System.out.println();
-        System.out.println(epicMap);
-        System.out.println(otherManagerEpicMap);
-        System.out.println();
-        System.out.println(subTaskMap);
-        System.out.println(otherManagerSubTaskMap);
-        System.out.println();
-        System.out.println(prioritizedSet);
-        System.out.println(otherManagerPrioritizedSet);
-
-        kvServer.stop();
+        Assertions.assertNotEquals(httpTaskManager, otherManager);
+        Assertions.assertEquals(taskMap, otherManagerTaskMap);
+        Assertions.assertEquals(epicMap, otherManagerEpicMap);
+        Assertions.assertEquals(subTaskMap, otherManagerSubTaskMap);
+        Assertions.assertEquals(prioritizedSet, otherManagerPrioritizedSet);
     }
+
 }
