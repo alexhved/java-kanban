@@ -24,32 +24,32 @@ public class KVServer {
 		server.createContext("/load", this::load);
 	}
 
-	private void load(HttpExchange h) throws  IOException {
-		try (h) {
-			if (!hasAuth(h)) {
+	private void load(HttpExchange exchange) throws  IOException {
+		try (exchange) {
+			if (!hasAuth(exchange)) {
 				System.out.println("Запрос неавторизован, нужен параметр в query API_TOKEN со значением апи-ключа");
-				h.sendResponseHeaders(403, 0);
+				exchange.sendResponseHeaders(403, 0);
 				return;
 			}
-			if ("GET".equals(h.getRequestMethod())) {
-				String key = h.getRequestURI().getPath().substring("/save/".length());
+			if ("GET".equals(exchange.getRequestMethod())) {
+				String key = exchange.getRequestURI().getPath().substring("/save/".length());
 				if (key.isEmpty()) {
 					System.out.println("Key для сохранения пустой. key указывается в пути: /save/{key}");
-					h.sendResponseHeaders(400, 0);
+					exchange.sendResponseHeaders(400, 0);
 					return;
 				}
 				String value = data.get(key);
 				if (value==null) {
 					System.out.println("Значение по ключу отсутствует");
-					h.sendResponseHeaders(400, 0);
+					exchange.sendResponseHeaders(400, 0);
 					return;
 				}
-				sendText(h, value);
+				sendText(exchange, value);
 				System.out.println("Значение для ключа " + key + " успешно обновлено!");
-				h.sendResponseHeaders(200, 0);
+				exchange.sendResponseHeaders(200, 0);
 			} else {
-				System.out.println("/save ждёт GET-запрос, а получил: " + h.getRequestMethod());
-				h.sendResponseHeaders(405, 0);
+				System.out.println("/save ждёт GET-запрос, а получил: " + exchange.getRequestMethod());
+				exchange.sendResponseHeaders(405, 0);
 			}
 
 		}

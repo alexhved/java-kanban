@@ -1,6 +1,5 @@
 package manager;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import epic.Epic;
 import epic.Status;
@@ -504,14 +503,14 @@ abstract class TaskManagerTest<T extends TaskManager> {
         clear();
         Epic epic = taskmanager.getEpicById(3);
         taskmanager.updateStatus(epic);
-        Assertions.assertNull(epic);
+        assertNull(epic);
     }
 
     @Test
     public void updateStatusEpicAllNew() {
         Epic epic = taskmanager.getEpicById(3);
         taskmanager.updateStatus(epic);
-        Assertions.assertEquals(Status.NEW, epic.getStatus());
+        assertEquals(Status.NEW, epic.getStatus());
     }
 
     @Test
@@ -521,7 +520,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
             subTask.setStatus(Status.DONE);
         }
         taskmanager.updateStatus(epic);
-        Assertions.assertEquals(Status.DONE, epic.getStatus());
+        assertEquals(Status.DONE, epic.getStatus());
     }
 
     @Test
@@ -534,7 +533,7 @@ abstract class TaskManagerTest<T extends TaskManager> {
         subTask2.setStatus(Status.IN_PROGRESS);
         subTask3.setStatus(Status.DONE);
         taskmanager.updateStatus(epic);
-        Assertions.assertNotNull(taskmanager.getEpicsSubtasks(3));
-        Assertions.assertEquals(Status.IN_PROGRESS, epic.getStatus());
+        assertNotNull(taskmanager.getEpicsSubtasks(3));
+        assertEquals(Status.IN_PROGRESS, epic.getStatus());
     }
 }

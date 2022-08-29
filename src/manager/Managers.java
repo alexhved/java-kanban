@@ -16,7 +16,6 @@ public class Managers {
                 .serializeNulls()
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                 .registerTypeAdapter(Duration.class, new DurationAdapter())
-                //.registerTypeAdapter(Task.class, new TaskAdapter())
                 .create();
     }
 
@@ -30,5 +29,9 @@ public class Managers {
 
     public static FileBackedTasksManager getBacked() {
         return new FileBackedTasksManager();
+    }
+
+    public static InMemoryTaskManager getInMemory() {
+        return new InMemoryTaskManager();
     }
 }

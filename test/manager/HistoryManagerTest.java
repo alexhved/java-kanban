@@ -1,7 +1,7 @@
 package manager;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import epic.Epic;
@@ -59,9 +59,9 @@ class HistoryManagerTest {
         Task task = new Task("name", "description", LocalDateTime.now(), Duration.ofMinutes(10));
         taskmanager.createTask(task);
         taskmanager.getHistoryManager().add(task);
-        Assertions.assertFalse(historyManager.getHistoryMap().isEmpty());
-        Assertions.assertEquals(task, historyManager.getHistoryMap().get(task.getId()).data);
-        Assertions.assertEquals(taskmanager.getTaskById(1), historyManager.getHistoryMap().get(1).data);
+        assertFalse(historyManager.getHistoryMap().isEmpty());
+        assertEquals(task, historyManager.getHistoryMap().get(task.getId()).data);
+        assertEquals(taskmanager.getTaskById(1), historyManager.getHistoryMap().get(1).data);
     }
 
     @Test
@@ -72,59 +72,59 @@ class HistoryManagerTest {
         int size = historyManager.getHistoryMap().size();
         taskmanager.getHistoryManager().add(task);
         int size2 = historyManager.getHistoryMap().size();
-        Assertions.assertEquals(size, size2);
-        Assertions.assertFalse(historyManager.getHistoryMap().isEmpty());
-        Assertions.assertEquals(task, historyManager.getHistoryMap().get(task.getId()).data);
-        Assertions.assertEquals(taskmanager.getTaskById(1), historyManager.getHistoryMap().get(1).data);
+         assertEquals(size, size2);
+         assertFalse(historyManager.getHistoryMap().isEmpty());
+         assertEquals(task, historyManager.getHistoryMap().get(task.getId()).data);
+         assertEquals(taskmanager.getTaskById(1), historyManager.getHistoryMap().get(1).data);
     }
 
     @Test
     void removeWithEmptyHistory() {
         clear();
         historyManager.remove(1);
-        Assertions.assertFalse(historyManager.getHistoryMap().containsKey(1));
+        assertFalse(historyManager.getHistoryMap().containsKey(1));
     }
 
     @Test
     void removeTwice() {
         historyManager.remove(1);
         historyManager.remove(1);
-        Assertions.assertFalse(historyManager.getHistoryMap().containsKey(1));
+        assertFalse(historyManager.getHistoryMap().containsKey(1));
     }
 
     @Test
     void removeFirst() {
         historyManager.remove(1);
-        Assertions.assertFalse(historyManager.getHistoryMap().containsKey(1));
-        Assertions.assertFalse(historyManager.getHistoryMap().isEmpty());
+        assertFalse(historyManager.getHistoryMap().containsKey(1));
+        assertFalse(historyManager.getHistoryMap().isEmpty());
     }
 
     @Test
     void removeMedium() {
         historyManager.remove(3);
-        Assertions.assertFalse(historyManager.getHistoryMap().containsKey(3));
-        Assertions.assertFalse(historyManager.getHistoryMap().isEmpty());
+        assertFalse(historyManager.getHistoryMap().containsKey(3));
+        assertFalse(historyManager.getHistoryMap().isEmpty());
     }
 
     @Test
     void removeLast() {
         historyManager.remove(6);
-        Assertions.assertFalse(historyManager.getHistoryMap().containsKey(6));
-        Assertions.assertFalse(historyManager.getHistoryMap().isEmpty());
+        assertFalse(historyManager.getHistoryMap().containsKey(6));
+        assertFalse(historyManager.getHistoryMap().isEmpty());
     }
 
     @Test
     void getHistoryListWithEmptyHistory() {
         clear();
         List<Task> historyList = historyManager.getHistoryList();
-        Assertions.assertNotNull(historyList);
-        Assertions.assertTrue(historyList.isEmpty());
+        assertNotNull(historyList);
+        assertTrue(historyList.isEmpty());
     }
 
     @Test
     void getHistoryList() {
         List<Task> historyList = historyManager.getHistoryList();
-        Assertions.assertNotNull(historyList);
-        Assertions.assertFalse(historyList.isEmpty());
+        assertNotNull(historyList);
+        assertFalse(historyList.isEmpty());
     }
 }

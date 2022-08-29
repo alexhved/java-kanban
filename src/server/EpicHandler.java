@@ -107,7 +107,6 @@ public class EpicHandler extends TaskHandler implements HttpHandler {
                 } else {
                     response = "Неправильный запрос";
                     sendResponse(exchange, response, 400);
-                    return;
                 }
                 return;
             }

@@ -39,21 +39,15 @@ class HttpTaskServerTest {
         taskManager.createTask(new Task("5-10", "5678910",
                 LocalDateTime.of(2023, Month.JUNE, 2, 0, 0), Duration.ofMinutes(10)));
         taskManager.createEpic(new Epic("drive", "moto"));
-        /*taskManager.createEpic(new Epic("learning", "Java course"));*/
         taskManager.createSubTask(new SubTask("sprint 3", "OOP", 3,
                 LocalDateTime.of(2023, Month.JUNE, 5, 0, 0), Duration.ofMinutes(10)));
         taskManager.createSubTask(new SubTask("learning", "Java course", 3,
                 LocalDateTime.of(2023, Month.JUNE, 6, 0, 0), Duration.ofMinutes(10)));
-        /*taskManager.createSubTask(new SubTask("learninffsfsg", "Java coursedfd", 4,
-                LocalDateTime.of(2023, Month.JUNE, 7, 0, 0), Duration.ofMinutes(10)));
-        taskManager.createSubTask(new SubTask("sfgsgs", "Java dsff", 4,
-                LocalDateTime.of(2023, Month.JUNE, 8, 0, 0), Duration.ofMinutes(10)));*/
         taskManager.getTaskById(1);
         taskManager.getTaskById(2);
         taskManager.getEpicById(3);
         taskManager.getEpicById(4);
         taskManager.getSubTaskById(5);
-        //taskManager.getSubTaskById(6);
 
         httpTaskServer.start();
     }
@@ -85,7 +79,7 @@ class HttpTaskServerTest {
         }.getType();
         List<Task> taskList = gson.fromJson(response.body(), type);
 
-        Assertions.assertEquals(taskManager.getAllTasks(), taskList);
+        assertEquals(taskManager.getAllTasks(), taskList);
     }
 
     @Test
@@ -98,7 +92,7 @@ class HttpTaskServerTest {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         Task task = gson.fromJson(response.body(), Task.class);
-        Assertions.assertEquals(taskManager.getTaskById(1), task);
+        assertEquals(taskManager.getTaskById(1), task);
     }
 
     @Test
@@ -115,7 +109,7 @@ class HttpTaskServerTest {
         HttpRequest request = HttpRequest.newBuilder().uri(url).POST(body).build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Assertions.assertTrue(taskManager.getTaskMap().containsKey(6));
+        assertTrue(taskManager.getTaskMap().containsKey(6));
         assertEquals("Успешно", response.body());
     }
 
@@ -128,8 +122,8 @@ class HttpTaskServerTest {
         HttpRequest request = HttpRequest.newBuilder().uri(url).DELETE().build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Assertions.assertEquals("Успешно", response.body());
-        Assertions.assertTrue(taskManager.getAllTasks().isEmpty());
+        assertEquals("Успешно", response.body());
+        assertTrue(taskManager.getAllTasks().isEmpty());
     }
 
     @Test
@@ -141,8 +135,8 @@ class HttpTaskServerTest {
         HttpRequest request = HttpRequest.newBuilder().uri(url).DELETE().build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Assertions.assertEquals("Успешно", response.body());
-        Assertions.assertFalse(taskManager.getTaskMap().containsKey(1));
+        assertEquals("Успешно", response.body());
+        assertFalse(taskManager.getTaskMap().containsKey(1));
     }
 
     @Test
@@ -158,7 +152,7 @@ class HttpTaskServerTest {
         }.getType();
         List<Epic> epicList = gson.fromJson(response.body(), type);
 
-        Assertions.assertEquals(taskManager.getAllEpics(), epicList);
+        assertEquals(taskManager.getAllEpics(), epicList);
     }
 
     @Test
@@ -171,7 +165,7 @@ class HttpTaskServerTest {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         Epic epic = gson.fromJson(response.body(), Epic.class);
-        Assertions.assertEquals(taskManager.getEpicById(3), epic);
+        assertEquals(taskManager.getEpicById(3), epic);
     }
 
     @Test
@@ -187,7 +181,7 @@ class HttpTaskServerTest {
         HttpRequest request = HttpRequest.newBuilder().uri(url).POST(body).build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Assertions.assertTrue(taskManager.getEpicMap().containsKey(6));
+        assertTrue(taskManager.getEpicMap().containsKey(6));
         assertEquals("Успешно", response.body());
     }
 
@@ -200,8 +194,8 @@ class HttpTaskServerTest {
         HttpRequest request = HttpRequest.newBuilder().uri(url).DELETE().build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Assertions.assertEquals("Успешно", response.body());
-        Assertions.assertTrue(taskManager.getAllEpics().isEmpty());
+        assertEquals("Успешно", response.body());
+        assertTrue(taskManager.getAllEpics().isEmpty());
     }
 
     @Test
@@ -213,8 +207,8 @@ class HttpTaskServerTest {
         HttpRequest request = HttpRequest.newBuilder().uri(url).DELETE().build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Assertions.assertEquals("Успешно", response.body());
-        Assertions.assertFalse(taskManager.getEpicMap().containsKey(3));
+        assertEquals("Успешно", response.body());
+        assertFalse(taskManager.getEpicMap().containsKey(3));
     }
 
     @Test
@@ -230,7 +224,7 @@ class HttpTaskServerTest {
         }.getType();
         List<SubTask> SubtaskList = gson.fromJson(response.body(), type);
 
-        Assertions.assertEquals(taskManager.getAllSubTasks(), SubtaskList);
+        assertEquals(taskManager.getAllSubTasks(), SubtaskList);
     }
 
     @Test
@@ -243,7 +237,7 @@ class HttpTaskServerTest {
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         SubTask subTask = gson.fromJson(response.body(), SubTask.class);
-        Assertions.assertEquals(taskManager.getSubTaskById(5), subTask);
+        assertEquals(taskManager.getSubTaskById(5), subTask);
     }
 
     @Test
@@ -273,8 +267,8 @@ class HttpTaskServerTest {
         HttpRequest request = HttpRequest.newBuilder().uri(url).DELETE().build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Assertions.assertEquals("Успешно", response.body());
-        Assertions.assertTrue(taskManager.getAllSubTasks().isEmpty());
+        assertEquals("Успешно", response.body());
+        assertTrue(taskManager.getAllSubTasks().isEmpty());
     }
 
     @Test
@@ -286,8 +280,8 @@ class HttpTaskServerTest {
         HttpRequest request = HttpRequest.newBuilder().uri(url).DELETE().build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Assertions.assertEquals("Успешно", response.body());
-        Assertions.assertFalse(taskManager.getSubTaskMap().containsKey(5));
+        assertEquals("Успешно", response.body());
+        assertFalse(taskManager.getSubTaskMap().containsKey(5));
     }
 
     @Test
@@ -297,8 +291,8 @@ class HttpTaskServerTest {
         HttpRequest request = HttpRequest.newBuilder().uri(url).GET().build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Assertions.assertEquals(400, response.statusCode());
-        Assertions.assertEquals("Неправильный запрос", response.body());
+        assertEquals(400, response.statusCode());
+        assertEquals("Неправильный запрос", response.body());
     }
 
     @Test
@@ -308,8 +302,8 @@ class HttpTaskServerTest {
         HttpRequest request = HttpRequest.newBuilder().uri(url).PUT(HttpRequest.BodyPublishers.ofString("test")).build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Assertions.assertEquals(405, response.statusCode());
-        Assertions.assertEquals("Неизвестный метод", response.body());
+        assertEquals(405, response.statusCode());
+        assertEquals("Неизвестный метод", response.body());
     }
 
     @Test
@@ -320,8 +314,8 @@ class HttpTaskServerTest {
         HttpRequest request = HttpRequest.newBuilder().uri(url).GET().build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Assertions.assertEquals(400, response.statusCode());
-        Assertions.assertEquals("Неправильный запрос", response.body());
+        assertEquals(400, response.statusCode());
+        assertEquals("Неправильный запрос", response.body());
     }
 
     @Test
@@ -337,8 +331,8 @@ class HttpTaskServerTest {
         }.getType();
         ArrayList<Task> historyList = gson.fromJson(response.body(), type);
 
-        Assertions.assertNotNull(historyList);
-        Assertions.assertEquals(taskManager.getHistoryManager().getHistoryList().size(), historyList.size());
+        assertNotNull(historyList);
+        assertEquals(taskManager.getHistoryManager().getHistoryList().size(), historyList.size());
     }
 
     @Test
@@ -354,8 +348,8 @@ class HttpTaskServerTest {
         }.getType();
         Set<Task> taskSet = gson.fromJson(response.body(), type);
 
-        Assertions.assertNotNull(taskSet);
-        Assertions.assertEquals(taskManager.getPrioritizedSet().size(), taskSet.size());
+        assertNotNull(taskSet);
+        assertEquals(taskManager.getPrioritizedSet().size(), taskSet.size());
     }
 
     @Test
@@ -371,7 +365,7 @@ class HttpTaskServerTest {
         }.getType();
         List<SubTask> subTaskList = gson.fromJson(response.body(), type);
 
-        Assertions.assertNotNull(subTaskList);
-        Assertions.assertEquals(taskManager.getEpicsSubtasks(3), subTaskList);
+        assertNotNull(subTaskList);
+        assertEquals(taskManager.getEpicsSubtasks(3), subTaskList);
     }
 }

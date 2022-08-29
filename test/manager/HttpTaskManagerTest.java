@@ -1,7 +1,7 @@
 package manager;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import server.KVServer;
@@ -70,11 +70,11 @@ class HttpTaskManagerTest {
         Map<Integer, SubTask> otherManagerSubTaskMap = otherManager.getSubTaskMap();
         Set<Task> otherManagerPrioritizedSet = otherManager.getPrioritizedSet();
 
-        Assertions.assertNotEquals(httpTaskManager, otherManager);
-        Assertions.assertEquals(taskMap, otherManagerTaskMap);
-        Assertions.assertEquals(epicMap, otherManagerEpicMap);
-        Assertions.assertEquals(subTaskMap, otherManagerSubTaskMap);
-        Assertions.assertEquals(prioritizedSet, otherManagerPrioritizedSet);
+        assertNotEquals(httpTaskManager, otherManager);
+        assertEquals(taskMap, otherManagerTaskMap);
+        assertEquals(epicMap, otherManagerEpicMap);
+        assertEquals(subTaskMap, otherManagerSubTaskMap);
+        assertEquals(prioritizedSet, otherManagerPrioritizedSet);
     }
 
 }

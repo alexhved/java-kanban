@@ -31,4 +31,14 @@ class ManagersTest {
         assertTrue(taskManager.getEpicMap().isEmpty());
         assertTrue(taskManager.getSubTaskMap().isEmpty());
     }
+    @Test
+    public void getInMemoryManager() {
+        taskManager = Managers.getInMemory();
+        assertNotNull(taskManager);
+        assertTrue(taskManager.getTaskMap().isEmpty());
+        assertTrue(taskManager.getEpicMap().isEmpty());
+        assertTrue(taskManager.getSubTaskMap().isEmpty());
+        assertTrue(taskManager.getPrioritizedSet().isEmpty());
+        assertTrue(taskManager.getHistoryManager().getHistoryMap().isEmpty());
+    }
 }

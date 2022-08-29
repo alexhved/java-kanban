@@ -1,7 +1,7 @@
 package manager;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import epic.Epic;
@@ -59,37 +59,37 @@ public class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksM
     public void loadFromFileWithEmpty() {
         clear();
         FileBackedTasksManager tasksManager2 = FileBackedTasksManager.loadFromFile(taskmanager);
-        Assertions.assertTrue(tasksManager2.getTaskMap().isEmpty());
-        Assertions.assertTrue(tasksManager2.getEpicMap().isEmpty());
-        Assertions.assertTrue(tasksManager2.getSubTaskMap().isEmpty());
+        assertTrue(tasksManager2.getTaskMap().isEmpty());
+        assertTrue(tasksManager2.getEpicMap().isEmpty());
+        assertTrue(tasksManager2.getSubTaskMap().isEmpty());
     }
 
     @Test
     public void loadFromFile() {
         FileBackedTasksManager tasksManager2 = FileBackedTasksManager.loadFromFile(taskmanager);
-        Assertions.assertFalse(tasksManager2.getTaskMap().isEmpty());
-        Assertions.assertFalse(tasksManager2.getEpicMap().isEmpty());
-        Assertions.assertFalse(tasksManager2.getSubTaskMap().isEmpty());
-        Assertions.assertEquals(taskmanager.getEpicMap(), tasksManager2.getEpicMap());
-        Assertions.assertEquals(taskmanager.getTaskMap(), tasksManager2.getTaskMap());
-        Assertions.assertEquals(taskmanager.getSubTaskMap(), tasksManager2.getSubTaskMap());
+        assertFalse(tasksManager2.getTaskMap().isEmpty());
+        assertFalse(tasksManager2.getEpicMap().isEmpty());
+        assertFalse(tasksManager2.getSubTaskMap().isEmpty());
+        assertEquals(taskmanager.getEpicMap(), tasksManager2.getEpicMap());
+        assertEquals(taskmanager.getTaskMap(), tasksManager2.getTaskMap());
+        assertEquals(taskmanager.getSubTaskMap(), tasksManager2.getSubTaskMap());
     }
 
     @Test
-    public void loadFromFileEpicWithutSubtasks() {
+    public void loadFromFileEpicWithoutSubtasks() {
         taskmanager.removeSubTaskById(5);
         taskmanager.removeSubTaskById(6);
         taskmanager.removeSubTaskById(7);
         taskmanager.removeSubTaskById(8);
-        Assertions.assertTrue(taskmanager.getEpicsSubtasks(3).isEmpty());
-        Assertions.assertTrue(taskmanager.getEpicsSubtasks(4).isEmpty());
+        assertTrue(taskmanager.getEpicsSubtasks(3).isEmpty());
+        assertTrue(taskmanager.getEpicsSubtasks(4).isEmpty());
 
         FileBackedTasksManager tasksManager2 = FileBackedTasksManager.loadFromFile(taskmanager);
-        Assertions.assertFalse(tasksManager2.getTaskMap().isEmpty());
-        Assertions.assertFalse(tasksManager2.getEpicMap().isEmpty());
-        Assertions.assertTrue(tasksManager2.getSubTaskMap().isEmpty());
-        Assertions.assertEquals(taskmanager.getEpicMap(), tasksManager2.getEpicMap());
-        Assertions.assertEquals(taskmanager.getTaskMap(), tasksManager2.getTaskMap());
-        Assertions.assertEquals(taskmanager.getSubTaskMap(), tasksManager2.getSubTaskMap());
+        assertFalse(tasksManager2.getTaskMap().isEmpty());
+        assertFalse(tasksManager2.getEpicMap().isEmpty());
+        assertTrue(tasksManager2.getSubTaskMap().isEmpty());
+        assertEquals(taskmanager.getEpicMap(), tasksManager2.getEpicMap());
+        assertEquals(taskmanager.getTaskMap(), tasksManager2.getTaskMap());
+        assertEquals(taskmanager.getSubTaskMap(), tasksManager2.getSubTaskMap());
     }
 }
